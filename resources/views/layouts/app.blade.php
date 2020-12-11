@@ -8,29 +8,10 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- CSS And JavaScript -->
     </head>
-
     <body>
         <div class="container">
             <div class="page">
-                <div style="margin: 100px 0px">
-                    <h4>Playing around with PHP and Laravel and fetching data from the Open Library API.</h4>
-                </div>
-                <div class="card" >
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img class="card-img" src="https://covers.openlibrary.org/b/id/{{$book["covers"][0]}}-L.jpg" alt="Card image cap"/>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                            <h5 class="card-title">{{$book["title"]}}</h5>
-                            <p class="card-text">{{html_entity_decode( $book["description"])}}</p>
-                            <a href="https://openlibrary.org/works/OL14868646W/A_Christmas_Carol?edition=christmascarolil00dickuoft" class="btn btn-primary">
-                                <p>View on Open Library</p>
-                            </a>
-                            </div>
-                        </div>
-                     </div>
-                  </div>
+                @yield("content")
              </div>
         <footer>
             <div style="display: flex, flex-direction: row, align-items: baseline, justify-content: space-between">
@@ -45,5 +26,17 @@
             </div>
         </footer>
         </div>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script>
+
+        $( ".search" ).on("input", function() {
+        console.log($(this).val());
+        $('.search-link').attr("href", "/search?q=" + $(this).val());
+        });
+
+        </script>
     </body>
 </html>

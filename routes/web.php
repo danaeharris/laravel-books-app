@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Http\Controllers\Controller;
 
-Route::get("/", [Controller::class, "book"]);
+Route::get("/", [Controller::class, "home"]);
+Route::get("/search", [Controller::class, "search"]);
+Route::get("/book/{id}", [Controller::class, "book"]);

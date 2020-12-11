@@ -6,24 +6,46 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Request;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function home()
+    {
+        return view("home");
+    }
 
-    public function book()
+    public function search(Request $request)
+    {
+        $query = $request->query("q");
+
+        $results = $this->CallAPI(
+            "GET",
+            "http://openlibrary.org/search.json?q=" .
+                str_replace(" ", "+", $query)
+        );
+
+        $pageData = [
+            "results" => $results,
+            "query" => $query,
+        ];
+        // var_dump($pageData);
+        return view("search")->with($pageData);
+    }
+
+    public function book($id)
     {
         $results = $this->CallAPI(
             "GET",
-            "https://openlibrary.org/works/OL14868646W.json"
+            "https://openlibrary.org/works/" . $id . ".json"
         );
-        $decodedResults = json_decode($results, true);
 
         $pageData = [
-            "book" => $decodedResults,
+            "book" => $results,
         ];
-
-        return view("app")->with($pageData);
+        // var_dump($pageData);
+        return view("book")->with($pageData);
     }
 
     function CallAPI($method, $url, $data = false)
@@ -37,6 +59,6 @@ class Controller extends BaseController
 
         curl_close($curl);
 
-        return $result;
+        return json_decode($result, true);
     }
 }
