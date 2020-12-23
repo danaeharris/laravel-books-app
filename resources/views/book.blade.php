@@ -14,10 +14,12 @@
         <div class="col-md-8">
             <div class="card-body">
             <h5 class="card-title">{{$book["title"]}}</h5>
-            @if (array_key_exists("description", $book))
-            <p class="card-text">{{html_entity_decode( $book["description"])}}</p>
+            @if (array_key_exists("description", $book) && is_array($book["description"]))
+            <p class="card-text">{{html_entity_decode( $book["description"]["value"])}}</p>
+            @elseif (array_key_exists("description", $book))
+            <p class="card-text">{{$book["description"]}}</p>
             @endif
-            <a href="https://openlibrary.org/works/OL14868646W/A_Christmas_Carol?edition=christmascarolil00dickuoft" class="btn btn-primary">
+            <a href="https://openlibrary.org/works/OL14868646W/{{$book["key"]}}" class="btn btn-primary">
                 <p>View on Open Library</p>
             </a>
             </div>

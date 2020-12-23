@@ -44,7 +44,7 @@ class Controller extends BaseController
         $pageData = [
             "book" => $results,
         ];
-        // var_dump($pageData);
+        var_dump($pageData);
         return view("book")->with($pageData);
     }
 
